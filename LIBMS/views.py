@@ -10,3 +10,6 @@ def v1(Request):
 
 def v2(Request):
     return HttpResponse("hello2")
+
+def v3(Request):
+    return HttpResponse("hello 3")
