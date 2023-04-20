@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}
+    View
+{% endblock %}
+
+{% block content %}
+{% if data %}
+<h1 class="text-center" style="margin-top:15px">Inventory</h1>
+<table class="table table-light table-stripped" style="width: 75%; height: 150px; margin: 50 auto;">
+    <thead>
+      <tr>
+        <th scope="col">Product ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Category</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for row in data %}
+        <tr>
+            <td>{{ row.PRODUCTID }}</td>
+            <td>{{ row.PRODUCTNAME }}</td>
+            <td>{{ row.CATEGORY }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{%else%}
+<div class="alert alert-warning" role="alert" style="width:98%;margin: 10 auto">
+    Inventory Empty!
+</div>
+{%endif%}
+{% endblock %}

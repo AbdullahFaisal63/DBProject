@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}
+    Search
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center" style="margin-top:15px">Search</h1>
+<div class="grid text-center">
+    <form method="get" style="display:inline-flex;margin: 50 auto;">
+        {% comment %} {{form1}} {% endcomment %}
+        <input class="form-control" type="text" name="id" maxlength="5" placeholder="ID" style=width:150px;margin:10px>
+        <input class="form-control" type="text" name="name" maxlength="20" placeholder="Product name" style=width:150px;margin:10px>
+        <input class="form-control" type="text" name="category" maxlength="20" placeholder="Category" style=width:150px;margin:10px>
+        <input type="submit" value="Search" class="btn btn-secondary" style="margin: 10;width:150px;">
+    </form>
+</div>
+
+
+
+
+
+
+{%if flag%}
+    {%if data%}
+    <table class="table table-light table-stripped" style="width: 75%; height: 150px; margin: 20 auto;">
+        <thead>
+        <tr>
+            <th scope="col">Product ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for row in data %}
+            <tr>
+                <td>{{ row.PRODUCTID }}</td>
+                <td>{{ row.PRODUCTNAME }}</td>
+                <td>{{ row.CATEGORY }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {%else%}
+    <div class="alert alert-warning" role="alert" style="width:98%;margin: 10 auto">
+        No result found!
+    </div>
+{%endif%}
+{%endif%}
+
+{% endblock %}

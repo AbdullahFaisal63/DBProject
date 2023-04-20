@@ -74,10 +74,21 @@ WSGI_APPLICATION = "DBProject.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.oracle",
+        "NAME": "orcl",
+        "USER": "system",
+        "PASSWORD": "#1Masdfvcxz",
+        "HOST": "localhost",
+        "PORT": "1521",
     }
 }
 
@@ -122,3 +133,8 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
