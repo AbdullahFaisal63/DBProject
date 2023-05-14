@@ -1,0 +1,17 @@
+asgiref==3.6.0
+beautifulsoup4==4.12.2
+certifi @ file:///C:/b/abs_85o_6fm0se/croot/certifi_1671487778835/work/certifi
+cx-Oracle==8.3.0
+Django==4.2
+django-livereload-server==0.4
+freetype-py==2.3.0
+Pillow==9.5.0
+pycairo==1.23.0
+reportlab==4.0.0
+rlPyCairo==0.2.0
+six==1.16.0
+soupsieve==2.4.1
+sqlparse==0.4.3
+tornado==6.3.1
+tzdata==2023.3
+wincertstore==0.2
