@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'cusBase.html' %}
 {% block title %}
     Search
 {% endblock %}
@@ -8,41 +8,48 @@
 <div class="grid text-center">
     <form method="get" style="display:inline-flex;margin: 50 auto;">
         {% comment %} {{form1}} {% endcomment %}
-        <input class="form-control" type="text" name="id" maxlength="5" placeholder="ID" style=width:150px;margin:10px>
-        <input class="form-control" type="text" name="name" maxlength="20" placeholder="Product name" style=width:150px;margin:10px>
-        <input class="form-control" type="text" name="category" maxlength="20" placeholder="Category" style=width:150px;margin:10px>
-        <input type="submit" value="Search" class="btn btn-secondary" style="margin: 10;width:150px;">
+        <input class="form-control" type="text" name="name" maxlength="20" placeholder="Product name" style="width:150px;margin:10px">
+        <select name="category" id="category" class="form-control w-100" name="category" style="width:150px;margin:10px" required>
+            <option value="" selected disabled>Select Category</option>
+            <option value="Home & Kitchen">Home & Kitchen</option>
+            <option value="Beauty & Personal Care">Beauty & Personal Care</option>
+            <option value="Clothing, Shoes & Jewelry">Clothing, Shoes & Jewelry</option>
+            <option value="Toys & Games">Toys & Games</option>
+            <option value="Health, Household & Baby Care">Health, Household & Baby Care</option>
+            <option value="Baby">Baby</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Sports & outdoors">Sports & outdoors</option>
+            <option value="Pet Supplies & Games">Pet Supplies & Games</option>
+            <option value="Office & Supplies">Office & Supplies</option>
+            <option value="Others">Others</option>
+          </select>
+        <input type="submit" value="Search" class="btn btn-primary" style="margin: 10;width:150px;">
     </form>
 </div>
 
 
-
-
-
-
 {%if flag%}
     {%if data%}
-    <table class="table table-light table-stripped" style="width: 75%; height: 150px; margin: 20 auto;">
-        <thead>
-        <tr>
-            <th scope="col">Product ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Category</th>
-        </tr>
-        </thead>
-        <tbody>
-            {% for row in data %}
-            <tr>
-                <td>{{ row.PRODUCTID }}</td>
-                <td>{{ row.PRODUCTNAME }}</td>
-                <td>{{ row.CATEGORY }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="row row-cols-1 row-cols-md-4 g-4" style="margin:50 10">
+        {% for i in data %}
+        <div class="col">
+          <div class="card h-100" style="min-height: 500px;">
+            <img src="{{i.IMG}}" class="card-img-top" alt="..." style="height:250px;object-fit:cover;">
+            <div class="card-body">
+              <h5 class="card-title">{{i.NAME}}</h5>
+              <p class="card-text">{{i.DESCRIPTION}}</p>
+              <h6 class="card-subtitle mb-2 text-muted">RS. {{i.PRICE}}</h6>
+              <form method="POST" action="{% url 'addCusCart' %}"> {%csrf_token%}
+                <input class="btn btn-primary" type="submit" name="{{i.ID}}" value="Add to cart" style="position: absolute; bottom: 0; left: 0; margin: 10px 0 15px 15px;color:black;">
+              </form>
+            </div>
+          </div>
+        </div>
+        {%endfor%}
+    </div>
     {%else%}
     <div class="alert alert-warning" role="alert" style="width:98%;margin: 10 auto">
-        No result found!
+        No products found!
     </div>
 {%endif%}
 {%endif%}

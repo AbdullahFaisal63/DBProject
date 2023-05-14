@@ -1,0 +1,80 @@
+{% extends 'adminBase.html' %}
+{% block title %}
+    Admin View
+{% endblock %}
+
+{% block style %}
+#cat-form{
+  margin:50 20 5 20 !important;
+}
+#sort-form{
+  margin:5 20 50 20 !important;
+}
+
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center" style="margin-top:15px">{{selected}}</h1>
+<div style="display: flex; justify-content: center; align-items: center;">
+    <form method="get" style="display:inline-flex;margin-top:50;">
+      {% comment %} {{form1}} {% endcomment %}
+      <input class="form-control" type="text" name="search" maxlength="20" placeholder="Product name" style="width:150px;margin:10px">
+      <select name="category" id="category" class="form-control w-100" name="category" style="width:150px;margin:10px">
+          <option value="none" selected disabled>Select Category</option>
+          <option value="Home and Kitchen">Home & Kitchen</option>
+          <option value="Beauty and Personal Care">Beauty & Personal Care</option>
+          <option value="Clothing, Shoes and Jewelry">Clothing, Shoes & Jewelry</option>
+          <option value="Toys and Games">Toys & Games</option>
+          <option value="Health, Household and Baby Care">Health, Household & Baby Care</option>
+          <option value="Baby">Baby</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Sports and outdoors">Sports & outdoors</option>
+          <option value="Pet Supplies and Games">Pet Supplies & Games</option>
+          <option value="Office and Supplies">Office & Supplies</option>
+          <option value="Others">Others</option>
+        </select>
+      <input type="submit" value="Search" class="btn btn-primary" style="margin: 10;width:150px;">
+    </form>
+  </div>
+{% if data %}
+<div class="row row-cols-1 row-cols-md-4 g-4" style="margin:50 10">
+    {% for i in data %}
+    <div class="col">
+      <div class="card h-100" style="min-height: 500px;">
+        <img src="{{i.IMG}}" class="card-img-top" alt="..." style="height:250px;object-fit:cover;">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">{{i.NAME}}</h5>
+          <p class="card-text">{{i.DESCRIPTION}}</p>
+          <div class="mt-auto">
+            <h6 class="card-subtitle mb-2 text-muted">RS. {{i.PRICE}}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">QTY. {{i.QUANTITY}}</h6>
+            {% if i.QUANTITY == 0 %}
+            <h6 class="card-subtitle mb-2 text-muted" style="color:red !important;">Out of stock</h6>
+            {% else %}
+            <h6 class="card-subtitle mb-2 text-muted" style="color:green !important;">In stock</h6>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+       
+    {%endfor%}
+</div>
+{%else%}
+<div class="alert alert-warning" role="alert" style="width:98%;margin: 10 auto">
+    No products found!
+</div>
+{%endif%}
+
+<script>
+    const form = document.getElementById('cat-form');
+    const select = document.getElementById('category');
+    select.addEventListener('change', () => {
+      form.submit();
+    });
+    function submitForm() {
+      document.getElementById('sort-form').submit();
+    }
+  </script>
+
+{% endblock %}

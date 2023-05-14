@@ -1,0 +1,297 @@
+select * from vendor
+
+alter table products
+drop column qty
+
+create table vendor(
+lname varchar(20),
+fname varchar(20),
+id number GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+address varchar(40),
+email varchar(20) unique
+);
+
+create table vendor_products(
+pid number,
+quantity integer,
+vid number,
+constraint fg foreign key(pid) references products(id),
+constraint fg1 foreign key(vid) references vendor(id),
+primary key(pid,vid)
+);
+
+select * from admincart
+commit;
+
+
+
+SELECT p.* FROM products p
+
+delete from admincart
+
+DELETE FROM vendor_products WHERE pid = 142 AND vid=21
+
+INSERT INTO vendor_products VALUES(pid,1,vid)
+
+drop table cuscart
+
+
+CREATE TABLE cuscart (
+  cart_id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  id NUMBER,
+  product_id NUMBER,
+  quantity INTEGER,
+  FOREIGN KEY (id) REFERENCES customer(id),
+  FOREIGN KEY (product_id) REFERENCES products(ID)
+);
+
+select * from admin_products
+
+CREATE TABLE admincart (
+  cart_id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  product_id NUMBER,
+  quantity INTEGER,
+  vid number,
+  aid number
+);
+
+drop table admincart
+
+desc vendor_products
+
+drop table admincart
+
+select * from vendor_products
+commit;
+desc vendor
+select * from admincart
+alter table vendor modify (email VARCHAR(50))
+DELETE FROM admin
+insert into admin(fname,lname,email,pass) values('Abdullah','Faisal','f219294@admin.nu.edu.pk','abcdef')
+
+select id, fname||' '||lname AS name, email, pass FROM admin
+
+
+create table admin_products(
+pid number,
+quantity integer,
+constraint gfhe foreign key(pid) references products(id)
+--primary key(pid)
+);
+drop table admin_products
+select * from admincart;
+
+drop procedure pol
+
+select * from ;
+
+create or replace procedure checkout
+is 
+nu number:=0;
+pi number;
+qu number;
+cursor rt is select cart_id,product_id,quantity,vid,aid from admincart;
+begin
+----
+nu := adm.nextval;
+for i in rt
+loop
+update admin_products
+set quantity = quantity + i.quantity
+where pid=i.product_id;
+if sql%notfound
+then insert into admin_products values(i.product_id,i.quantity);
+end if;
+end loop;
+insert into purchase(purchase_no,vendorid,productid,cost_price,quantity,dat) select nu,p.vid,p.product_id,p1.price,p.quantity,SYSDATE from admincart p,products p1 where p.product_id=p1.id;
+delete from admincart;
+end;
+
+end;
+
+select * from purchase
+select * from admin_products
+
+begin
+pol(141,0,48)
+end;
+
+ 
+insert into admin_products(pid,quantity)
+select product_id,quantity from admincart;
+
+begin
+checkout;
+end;
+
+select * from sales;
+
+
+create or replace procedure cuscheckout
+is 
+nu number:=0;
+begin
+nu := cusc.nextval;
+insert into sales (order_no,cusid,productid,quantity,perunit_price,date_ti) select nu, p.id,p.product_id,p.quantity,p1.price,SYSDATE from cuscart p , products p1 where p1.id=p.product_id;
+delete from cuscart;
+end;
+
+create sequence cusc start with 1 increment by 1
+delete from cuscart;
+
+select * from admincart
+commit
+
+SELECT p.* FROM products p,admin_products p1 where p.id=p1.pid;
+
+
+CREATE OR REPLACE PROCEDURE vendorqty(vi NUMBER, pi NUMBER, qty NUMBER) IS
+  flg NUMBER := 0;
+BEGIN
+  SELECT vid INTO flg FROM vendor_products WHERE vid = vi AND pid = pi;
+
+  UPDATE vendor_products
+  SET quantity = quantity + qty
+  WHERE vid = vi AND pid = pi;
+
+  EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+      INSERT INTO vendor_products VALUES(pi, qty, vi);
+END;
+
+
+
+begin
+addadmincart();
+end;
+
+select * from admincart
+create or replace procedure addadmincart(pi number,vi number,qty number,ai number)
+is
+vqty number:=0;
+v number;
+begin
+select quantity into vqty from vendor_products where pid=pi and vid=vi;
+update vendor_products 
+set quantity = quantity - qty
+where pid=pi and vid=vi;
+select vid into v from admincart where vid=vi and product_id = pi;
+update admincart 
+set quantity= quantity + qty
+where vid=vi and product_id=pi;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN insert into admincart(product_id,quantity,vid,aid) values(pi,qty,vi,ai);
+end;
+------------------------------------------------------------------------------------------------
+
+commit;
+select * from purchase;
+delete from admincart
+create or replace procedure remadmincart(cart_i number)
+is
+ctid number;
+pi number;
+vi number;
+qty number;
+flg number;
+begin
+select product_id,quantity,vid into pi,qty,vi from admincart where cart_id=cart_i;
+select vid into flg from vendor_products where vid = vi and pid = pi;
+
+update vendor_products
+set quantity = quantity + qty
+where vid=vi and pid=pi;
+delete from admincart where cart_id = cart_i;
+
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+    insert into vendor_products values(pi,qty,vi);
+    delete from admincart where cart_id = cart_i;
+
+
+end;
+
+ commit
+select * from cuscart
+
+
+---------------------------------------------------------------
+    create or replace procedure addcuscart(pi number,ci number,qty number)
+is
+vqty number:=0;
+v number;
+begin
+update admin_products 
+set quantity = quantity - qty
+where pid=pi ;
+select product_id into v from cuscart where product_id=pi;
+update cuscart
+set quantity=quantity + qty
+where product_id=pi;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN 
+    insert into cuscart(product_id,quantity,id) values(pi,qty,ci);
+end;
+
+
+
+
+
+select * from cuscart
+create or replace procedure remcuscart(cart_i number)
+is
+pi number;
+qty number;
+flg number;
+begin
+select product_id,quantity into pi,qty from cuscart where cart_id=cart_i;
+select pid into flg from admin_products where pid = pi;
+
+update admin_products
+set quantity = quantity + qty
+where pid=pi;
+delete from cuscart where cart_id = cart_i;
+
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+    insert into admin_products values(pi,qty);
+    delete from cuscart where cart_id = cart_i;
+
+
+end;
+
+delete from vendor_products
+commit
+
+
+
+
+create table sales(
+order_no number,
+cusid number,
+productid number,
+perunit_price integer,
+quantity number,
+date_ti date,
+constraints fk81 foreign key(cusid) references customer(id),
+constraints fk84 foreign key(productid) references products(id)
+);
+
+create sequence adm start with 1 increment by 1
+
+
+drop table purchase
+create table purchase(
+purchase_no number,
+vendorid number,
+productid number,
+cost_price integer,
+quantity number,
+dat date,
+constraints fk1 foreign key(vendorid) references vendor(id),
+constraints fk21 foreign key(productid) references products(id)
+);
+
+select * from admincart
+commit
+delete from admin_products

@@ -1,0 +1,52 @@
+{% extends 'adminBase.html'%}
+
+{%block title%}
+Cart
+{%endblock%}
+
+{%block content%}
+
+<h1 class="text-center" style="margin-top:15px">Cart</h1>
+
+<div class="container d-flex justify-content-center my-5">
+    <div class="col-md-8">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+        {%for i in data%}
+          <tr>
+            <td>{{i.NAME}}</td>
+            <td>RS. {{i.PRICE}}</td>
+            <td>{{i.QUANTITY}}</td>
+            <td>RS. {{i.PRICE}}</td>
+            <td style="text-align:right;"><form method="POST" action="{% url 'remAdminCart' %}">{%csrf_token%}<input class="btn btn-danger" name="{{i.CART_ID}}" type="submit" value="Remove"></form></td>
+          </tr>
+        {%endfor%}
+        </tbody>
+      </table>
+  
+      <div class="row">
+        <div class="col-sm-6" style="margin-top:90">
+          <a href="/purchaseStock" class="btn btn-primary">Continue Purchasing</a>
+        </div>
+        <div class="col-sm-6 text-right" style="text-align:right;">
+          <p>Subtotal: RS. {{subtotal}}</p>
+          <p>Tax: Rs. {{tax}}</p>
+          <h3>Total: Rs. {{total}}</h3>
+          <form method="POST"> {%csrf_token%}
+          <input class="btn btn-success" name="adminCheckout" type="submit" value="Checkout">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>  
+
+{%endblock%}

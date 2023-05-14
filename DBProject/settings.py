@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-^03-2bhnjsx%(5^nahnqy%@p4^)sf5*#v5_(ax1m5-m1fht488
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','192.168.137.1']
 
 
 # Application definition
@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "LIBMS"
+    'livereload',
+    'LIBMS'
 ]
 
 MIDDLEWARE = [
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'livereload.middleware.LiveReloadScript',
 ]
 
 ROOT_URLCONF = "DBProject.urls"
@@ -91,6 +93,10 @@ DATABASES = {
         "PORT": "1521",
     }
 }
+
+
+# AUTH_USER_MODEL = 'LIBMS.customer' # Replace 'app_name' with the name of your app and 'Customer' with the name of your customer model
+# AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
 
 
 # Password validation

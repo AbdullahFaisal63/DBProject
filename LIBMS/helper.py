@@ -4,28 +4,28 @@ from django.http import HttpRequest
 def searchRec(request):
     data=[]
     cursor = connection.cursor()
-    #print(f"SELECT * FROM products WHERE productname LIKE '%{request.GET.get('name')}%'"))
+    #print(f"SELECT * FROM products WHERE name LIKE '%{request.GET.get('name')}%'"))
     if request.GET.get('query'):
       if request.GET.get('query').isdigit():
-        cursor.execute(f"SELECT * FROM products WHERE productid = '{request.GET.get('query')}'")
+        cursor.execute(f"SELECT * FROM products WHERE id = '{request.GET.get('query')}'")
       else:
-        cursor.execute(f"SELECT * FROM products WHERE productname LIKE '%{request.GET.get('query')}%' OR category = '{request.GET.get('query')}'")
+        cursor.execute(f"SELECT * FROM products WHERE name LIKE '%{request.GET.get('query')}%' OR category = '{request.GET.get('query')}'")
     else:
       if request.GET.get('id') and request.GET.get('name') and request.GET.get('category'):
-        cursor.execute(f"SELECT * FROM products WHERE productid = '{request.GET.get('id')}' AND productname LIKE '%{request.GET.get('name')}%' AND category = '{request.GET.get('category')}'")
+        cursor.execute(f"SELECT * FROM products WHERE id = '{request.GET.get('id')}' AND name LIKE '%{request.GET.get('name')}%' AND category = '{request.GET.get('category')}'")
       else:
         if request.GET.get('name'):
           if request.GET.get('id'):
-            cursor.execute(f"SELECT * FROM products WHERE productname LIKE '%{request.GET.get('name')}%' AND productid = '{request.GET.get('id')}'")
+            cursor.execute(f"SELECT * FROM products WHERE name LIKE '%{request.GET.get('name')}%' AND id = '{request.GET.get('id')}'")
           elif request.GET.get('category'):
-            cursor.execute(f"SELECT * FROM products WHERE productname LIKE '%{request.GET.get('name')}%' AND category = '{request.GET.get('category')}'")
+            cursor.execute(f"SELECT * FROM products WHERE name LIKE '%{request.GET.get('name')}%' AND category = '{request.GET.get('category')}'")
           else:
-            cursor.execute(f"SELECT * FROM products WHERE productname LIKE '%{request.GET.get('name')}%'")
+            cursor.execute(f"SELECT * FROM products WHERE name LIKE '%{request.GET.get('name')}%'")
         elif request.GET.get('id'):
           if request.GET.get('category'):
-            cursor.execute(f"SELECT * FROM products WHERE productid = '{request.GET.get('id')}' AND category = '{request.GET.get('category')}'")
+            cursor.execute(f"SELECT * FROM products WHERE id = '{request.GET.get('id')}' AND category = '{request.GET.get('category')}'")
           else:
-            cursor.execute(f"SELECT * FROM products WHERE productid = '{request.GET.get('id')}'")
+            cursor.execute(f"SELECT * FROM products WHERE id = '{request.GET.get('id')}'")
         elif request.GET.get('category'):
           cursor.execute(f"SELECT * FROM products WHERE category = '{request.GET.get('category')}'")
 
@@ -44,3 +44,10 @@ def searchRec(request):
     #print(data)
     cursor.close()
     return data
+
+  
+def searchAdminProducts(request):
+  pass
+
+def searchVendorProducts(request):
+  pass

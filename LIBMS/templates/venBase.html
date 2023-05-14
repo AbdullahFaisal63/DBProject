@@ -21,46 +21,84 @@
     <link href="https://fonts.googleapis.com/css2?family=Secular+One&display=swap" rel="stylesheet">
     {% comment %} <link rel="stylesheet" href="insert.css"> {% endcomment %}
 	<title>{% block title %} {% endblock %}</title>
+  <style>
+    body {
+      background-color:#F7F7F7;
+  }
+  .navbar {
+    background-color: #303841 !important;
+  }
+
+.btn-primary {
+  background-color: #FF5722;
+  border-color: #FF5722;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-top: 30px;
+}
+
+.btn-danger {
+  font-size: 16px;
+  border-radius: 5px;
+  margin-top: 30px;
+}
+
+.btn-primary:hover {
+  background-color: #CC2400;
+  border-color: #CC2400;
+}
+
+.btn-primary:active {
+  background-color: #660000 !important;
+  border-color: #660000 !important;
+}
+
+.form-control:focus {
+  box-shadow: 0px 0px 0px 5px rgba(255, 87, 34, .5);
+  border-color: red;
+}
+    {% block style%} {%endblock%}
+  </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" id="navbar">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Inventory Management</a>
+          <a class="navbar-brand" href="#" style="font-weight:bold;color:#EEEEEE">My Shop</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/view/">View</a>
+                <a class="nav-link active" aria-current="page" style="color:#EEEEEE" href="/venHome">Home</a>
               </li>
               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" style="color:#EEEEEE" aria-expanded="false">
                   Manage
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/insert/">Insert</a></li>
-                  <li><a class="dropdown-item" href="#">Update</a></li>
-                  {% comment %} <li><hr class="dropdown-divider"></li> {% endcomment %}
-                  <li><a class="dropdown-item" href="/delete/">Delete</a></li>
+                  <li><a class="dropdown-item" href="/addItems/">Add items</a></li>
+                  <li><a class="dropdown-item" href="/remItems/">Remove items</a></li>
                 </ul>
               </li>
+              {% block addNavLinks %}
+              {% endblock %}
               {% comment %} <li class="nav-item">
                 <a class="nav-link disabled">Disabled</a>
               </li> {% endcomment %}
             </ul>
-            <form class="d-flex" role="search" action="{% url 'search' %}">
-              <input class="form-control me-2" type="text" maxlength="20" placeholder="Search" aria-label="Search" name='query'>
-              <button class="btn btn-outline-success" type="submit">Search</button>
+            <a href="/logout/">
+              <button type="button" class="btn btn-danger" style="margin:5px 10px 20px 0px">Logout</button>
+            </a>
+            <form class="d-flex" role="search" action="{% url 'venHome' %}">
+              <input class="form-control me-2" type="text" maxlength="20" placeholder="Search" aria-label="Search" name='query' style="margin:auto 5;">
+              <button class="btn btn-primary" type="submit" style="margin:auto 5;color:black;">Search</button>
             </form>
           </div>
         </div>
       </nav>
-
     {% block content %}
     {% endblock %}
+
 </body>
 </html>

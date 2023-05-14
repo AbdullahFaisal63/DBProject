@@ -1,20 +1,15 @@
-{% extends 'cusBase.html' %}
+{% extends 'venBase.html' %}
 {% block title %}
-    View
+    Add Items
 {% endblock %}
 
 {% block style %}
-#cat-form{
-  margin:50 20 5 20 !important;
-}
-#sort-form{
-  margin:5 20 50 20 !important;
-}
 
 {% endblock %}
 
 {% block content %}
-<h1 class="text-center" style="margin-top:15px">{{selected}}</h1>
+<h1 class="text-center" style="margin-top:15px">Add Items</h1>
+<h2 class="text-center" style="margin-top:30px">{{selected}}</h2>
 <div style="display: flex; justify-content: center; align-items: center;">
   <form method="get" style="display:inline-flex;margin-top:50;">
     {% comment %} {{form1}} {% endcomment %}
@@ -33,16 +28,10 @@
         <option value="Office and Supplies">Office & Supplies</option>
         <option value="Others">Others</option>
       </select>
-    <input type="submit" value="Search" class="btn btn-primary" style="margin: 10;width:150px;color:black;">
+    <input type="submit" value="Search" class="btn btn-primary" style="margin: 10;width:150px;">
   </form>
 </div>
-  <form method="GET" id="sort-form">
-    <select name="sort" id="sort" class="form-control" onchange="submitForm()">
-      <option value="" selected disabled>Sort</option>
-      <option value="phl">Price (High-Low)</option>
-      <option value="plh">Price (Low-High)</option>
-    </select>
-  </form>
+
 {% if data %}
 <div class="row row-cols-1 row-cols-md-4 g-4" style="margin:50 10">
     {% for i in data %}
@@ -53,14 +42,8 @@
           <h5 class="card-title">{{i.NAME}}</h5>
           <p class="card-text">{{i.DESCRIPTION}}</p>
           <div class="mt-auto">
-            <h6 class="card-subtitle mb-2 text-muted">RS. {{i.UPRICE}}</h6>
-            <h6 class="card-subtitle mb-2 text-muted">QTY. {{i.QUANTITY}}</h6>
-            {% if i.QUANTITY == 0 %}
-            <h6 class="card-subtitle mb-2 text-muted" style="color:red !important;">Out of stock</h6>
-            {% else %}
-            <h6 class="card-subtitle mb-2 text-muted" style="color:green !important;">In stock</h6>
-            {% endif %}
-            <form method="POST" action="{% url 'addCusCart' %}" class="mt-auto">
+            <h6 class="card-subtitle mb-2 text-muted">RS. {{i.PRICE}}</h6>
+            <form method="POST" action="{% url 'listItem' %}" class="mt-auto">
               {% csrf_token %}
               <div class="row align-items-end">
                 <div class="col-md-6">
@@ -69,14 +52,15 @@
                   </div>
                 </div>
                 <div class="col-md-6 d-flex justify-content-end align-items-center">
-                  <input class="btn btn-primary btn-block" type="submit" name="{{i.VID}}" value="Add to cart" style="color:black;">
+                  <input class="btn btn-primary btn-block" type="submit" name="{{i.VID}}" value="List item" style="color:black;">
                 </div>
               </div>
             </form>
           </div>
         </div>
       </div>
-    </div>   
+    </div>
+    
     {%endfor%}
 </div>
 {%else%}
@@ -86,14 +70,10 @@
 {%endif%}
 
 <script>
-    const form = document.getElementById('cat-form');
+    const form = document.getElementById('my-form');
     const select = document.getElementById('category');
     select.addEventListener('change', () => {
       form.submit();
     });
-    function submitForm() {
-      document.getElementById('sort-form').submit();
-    }
   </script>
-
 {% endblock %}

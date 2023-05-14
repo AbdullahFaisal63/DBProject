@@ -1,0 +1,48 @@
+{% extends 'adminBase.html' %}
+
+{% block title %}
+Notifications
+{% endblock %}
+
+{% block style %}
+.message {
+  border-radius: 20px;
+  margin: 10px 0;
+  padding: 10px;
+  max-width: 80%;
+  display: inline-block;
+}
+.message-received {
+  background-color: #e6e6e6;
+  float: left;
+}
+.message-received .message-content {
+  color: #000;
+}
+.message-time {
+  font-size: 12px;
+  color: #999;
+  margin-top: 5px;
+}
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center" style="margin-top:15px">Notifications</h1>
+
+{% for i in data %}
+<div class="container mt-5">
+  <div class="card-deck">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{i.FNAME}} :{{i.EMAIL}}</h5>
+        <p class="card-text">{{i.MESSAGE}}</p>
+        <form method="POST"> {%csrf_token%}
+        <button type="submit" name="notno" value="{{i.NOTNO}}" class="btn btn-danger dismiss-btn">Dismiss</button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+
+  </div>
+</div>
+{% endblock %}

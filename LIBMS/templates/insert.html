@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'adminBase.html' %}
 {% block title %}
     Insert
 {% endblock %}
@@ -16,8 +16,28 @@
     <form method="POST" style="display: flex; flex-direction: column; align-items: center;margin: 50 auto">
         {% csrf_token %}
         {% comment %} {{form1}} {% endcomment %}
-        <input class="form-control" type="text" name="name" maxlength="20" placeholder="Product name" style=width:150px;margin:10px>
-        <input class="form-control" type="text" name="category" maxlength="20" placeholder="Category" style=width:150px;margin:10px>
-        <input type="submit" value="Insert" class="btn btn-secondary" style="margin: 20px;">
+        <input class="form-control" type="text" name="name" maxlength="20" placeholder="Product name" style=width:250px;margin:10px required>
+        {% comment %} <input class="form-control" type="text" name="category" maxlength="20" placeholder="Category" style=width:150px;margin:10px> {% endcomment %}
+        <input class="form-control" type="text" name="price" maxlength="10" placeholder="Price" style=width:250px;margin:10px required>
+        <input class="form-control" type="text" name="description" maxlength="255" placeholder="Description" style=width:250px;margin:10px required>
+        <input class="form-control" type="text" name="img" maxlength="255" placeholder="IMG-link" style=width:250px;margin:10px required>
+        <div class="form-group" style=width:250px;margin:10px>
+            <select name="category" id="category" class="form-control w-100" name="category" required>
+              <option value="" selected disabled>Select Category</option>
+              <option value="Home and Kitchen">Home & Kitchen</option>
+              <option value="Beauty and Personal Care">Beauty & Personal Care</option>
+              <option value="Clothing, Shoes and Jewelry">Clothing, Shoes & Jewelry</option>
+              <option value="Toys and Games">Toys & Games</option>
+              <option value="Health, Household and Baby Care">Health, Household & Baby Care</option>
+              <option value="Baby">Baby</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Sports and outdoors">Sports & outdoors</option>
+              <option value="Pet Supplies and Games">Pet Supplies & Games</option>
+              <option value="Office and Supplies">Office & Supplies</option>
+              <option value="Others">Others</option>
+            </select>
+          </div>
+          
+        <input type="submit" value="Insert" class="btn btn-primary" style="margin: 20px;">
     </form>
 {% endblock %}

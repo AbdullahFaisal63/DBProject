@@ -1,0 +1,33 @@
+{% extends 'adminBase.html' %}
+
+{% block title%}
+Manage Admins
+{% endblock %}
+
+{% block content%}
+<h1 class="text-center" style="margin-top:15px">Manage Admins</h1>
+<div style="margin-top:50;text-align:center;">
+    <a href="/" class="btn btn-primary" style="width:100; color:black; font-size:18px; margin-right:150;" href="addAdmin/">Add</a>
+    <a href="/" class="btn btn-primary" style="width:100; color:black; font-size:18px; margin-left:150;" href="remAdmin/">Remove</a>
+</div>
+<table class="table" style="width: 75%; height: 150px; margin: 100 auto;">
+    <thead style="text-align:center;">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Password</th>
+      </tr>
+    </thead>
+    <tbody style="text-align:center;">
+        {% for row in data %}
+        <tr>
+            <td>{{ row.ID }}</td>
+            <td>{{ row.NAME }}</td>
+            <td>{{ row.EMAIL }}</td>
+            <td>{{ row.PASS }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

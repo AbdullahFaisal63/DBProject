@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+      body {
+        background-color:#F7F7F7;
+    }
+      .container {
+        max-width: 400px;
+        margin: 0 auto;
+        margin-top: 100px;
+      }
+      .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        border-radius: 25px;
+        overflow: hidden;
+      }
+      .card-header {
+        background-color: #fff;
+        border-bottom: none;
+        text-align: center;
+        padding: 50px 20px;
+      }
+      .card-body {
+        padding: 50px 20px;
+      }
+      .form-group {
+        margin-bottom: 30px;
+      }
+      .form-group label {
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .form-control {
+        height: 50px;
+        font-size: 16px;
+        border-radius: 5px;
+        box-shadow: none;
+      }
+      .btn-primary {
+        background-color: #FF5722;
+        border-color: #FF5722;
+        width: 100%;
+        height: 50px;
+        font-size: 16px;
+        border-radius: 5px;
+        margin-top: 30px;
+      }
+      .btn-primary:hover {
+        background-color: #CC2400;
+        border-color: #CC2400;
+      }
+      .btn-primary:active {
+        background-color: #AA3E1C  !important;
+        border-color: #AA3E1C  !important;
+        box-shadow: 0px 0px 0px 5px rgba(255, 87, 34, .5) !important;
+      }
+      .btn-primary:focus {
+        background-color: #AA3E1C  !important;
+        border-color: #AA3E1C  !important;
+        box-shadow: 0px 0px 0px 5px rgba(255, 87, 34, .5) !important;
+      }
+      .text-center {
+        margin-top: 20px;
+      }
+      .text-center a {
+        margin: 10px;
+        color:;
+      }      
+      .form-control:focus {
+        box-shadow: 0px 0px 0px 5px rgba(255, 87, 34, .5);
+        border-color: red;
+      }
+      
+    </style>
+  </head>
+  <body>    
+    {% if messages %}
+    <div class="alert alert-danger" role="alert" style="width:98%;margin:10px auto;">
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+  {% endif %}
+    <div class="container">
+      <div class="card">
+        <div class="card-header">
+          <h3>Admin Login</h3>
+        </div>
+        <div class="card-body">
+          <form method="POST">
+            {%csrf_token%}
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" name="email" id="email" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+            </div>
+            {% comment %} <div class="form-group">
+                <label for="password">Login Type</label>
+                <select name="category" id="category" class="form-control" name="type" required>
+                  <option value="" selected disabled>Select Type</option>
+                  <option value="Category 1">Customer</option>
+                  <option value="Category 2">Admin & Personal Care</option>
+                  <option value="Category 3">Seller</option>
+                </select>
+              </div> {% endcomment %}
+            <button type="submit" class="btn btn-primary">Login</button>
+          </form>
+          <div class="text-center">
+            <a style="color:#AA3E1C" href="#">Forgot password?</a>
+          </div>
+          <div class="text-center">
+            <a style="color:#AA3E1C" href="/cusLogin">Customer login</a>
+            <a style="color:#AA3E1C" href="/venLogin">Vendor login</a>
+          </div></div>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

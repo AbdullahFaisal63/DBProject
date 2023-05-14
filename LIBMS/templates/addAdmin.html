@@ -1,0 +1,38 @@
+{% extends 'adminBase.html' %}
+
+{% block title %}
+Add Admin
+{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+  <div class="card p-3" style="width: 800px;">
+    <h2 class="text-center mb-3">Add Admin</h2>
+    <form method="POST">  {%csrf_token%}
+      <div class="form-group" style="margin:10 0 10 0">
+        <label for="first-name">First Name:</label>
+        <input type="text" id="first-name" name="firstname" class="form-control">
+      </div>
+      <div class="form-group" style="margin:10 0 10 0">
+        <label for="last-name">Last Name:</label>
+        <input type="text" id="last-name" name="lastname" class="form-control">
+      </div>
+      <div class="form-group" style="margin:10 0 10 0">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" class="form-control">
+      </div>
+      <div class="form-group" style="margin:10 0 10 0">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-primary btn-block mx-auto" style="width:100%; margin-top:50;">Add</button>
+    </form>
+  </div>
+</div>
+
+
+{% endblock %}

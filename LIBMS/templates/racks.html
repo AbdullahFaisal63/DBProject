@@ -1,0 +1,33 @@
+{% extends 'adminBase.html' %}
+{% block title %}
+    Racks
+{% endblock %}
+
+{% block content %}
+<h1 class="text-center" style="margin-top:15px">Racks</h1>
+<table class="table" style="width: 75%; height: 150px; margin: 100 auto;">
+    <thead style="text-align:center;">
+      <tr>
+        <th scope="col">Rack ID</th>   
+        <th scope="col">Category</th>
+        <th scope="col">Total products</th>
+      </tr>
+    </thead>
+    <tbody style="text-align:center;">
+        {% for row in ta %}
+        <tr>
+            <td>{{ row.RACKID }}</td>
+            <td>{{ row.CATEG }}</td>
+            <td>{{ row.NOP }}</td>
+        </tr>
+        {% endfor %}
+        {% for row in tb %}
+        <tr>
+            <td>{{ row.RACKID }}</td>
+            <td>{{ row.CATEG }}</td>
+            <td>0</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'adminBase.html' %}
+
+{% block title%}
+Remove Admins
+{% endblock %}
+
+{% block content%}
+<h1 class="text-center" style="margin-top:15px">Remove Admins</h1>
+<form method="POST"> {%csrf_token%}
+  <table class="table table-light table-stripped" style="width: 75%; height: 150px; margin: 20 auto;">
+    <thead style="text-align:center;">
+    <tr>
+        <th scope="col">Select</th>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Password</th>
+    </tr>
+    </thead>
+    <tbody style="text-align:center;">
+        {% for row in data %}
+        <tr>
+            <td><input type="checkbox" name="selected_ids" value="{{ row.ID }}"></td>
+            <td>{{ row.ID }}</td>
+            <td>{{ row.NAME }}</td>
+            <td>{{ row.EMAIL }}</td>
+            <td>{{ row.PASS }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+  <div style="text-align:center">
+    <input type="submit" name="delbtn" value="Delete" class="btn btn-warning" style="width:25%;margin-top: 25;">
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends 'adminBase.html' %}
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block style%}
+.nav-tabs .nav-item .nav-link:not(.active) {
+  color: #303841;
+}
+
+.nav-tabs .nav-item .nav-link.active {
+  color: #FF5722;
+}
+{%endblock%}
+
+{% block content %}
+<h1 class="text-center" style="margin-top:15px">Dashboard</h1>
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="tab" href="#table1">Inventory</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#table2">Purchase history</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#table3">Sales history</a>
+  </li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active" id="table1">
+    <form method="POST" action="{% url 'generateReport' %}">
+      {% csrf_token %}
+      <input type="hidden" name="reportType" value="inv">
+      <button class="btn btn-primary" type="submit" name="download_btn" value="Download PDF" style="float: right;margin-right:20">Download PDF</button>
+    </form>
+    <table class="table">
+      <thead style="text-align:center;">
+        <tr>
+          <th scope="col">Product ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Category</th>
+        </tr>
+      </thead>
+      <tbody style="text-align:center;">
+          {% for row in data %}
+          <tr>
+              <td>{{ row.ID }}</td>
+              <td>{{ row.NAME }}</td>
+              <td>{{ row.QUANTITY }}</td>
+              <td>{{ row.CATEGORY }}</td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+
+  </div>
+  <div class="tab-pane" id="table2">
+    <form method="POST" action="{% url 'generateReport' %}">
+      {% csrf_token %}
+      <input type="hidden" name="reportType" value="pHis">
+      <button class="btn btn-primary" type="submit" name="download_btn" value="Download PDF" style="float: right;margin-right:20">Download PDF</button>
+    </form>
+    <table class="table">
+      <thead style="text-align:center;">
+        <tr>
+          <th scope="col">Purchase ID</th>   
+          <th scope="col">Quantity</th>
+          <th scope="col">Total</th>
+          <th scope="col">Date</th>
+        </tr>
+      </thead>
+      <tbody style="text-align:center;">
+          {% for row in phis %}
+          <tr>
+              <td>{{ row.PUID }}</td>
+              <td>{{ row.TQTY }}</td>
+              <td>{{ row.TOTAL }}</td>
+              <td>{{ row.PURCHASEDATE }}</td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+
+  </div>
+  <div class="tab-pane" id="table3">
+    <form method="POST" action="{% url 'generateReport' %}">
+      {% csrf_token %}
+      <input type="hidden" name="reportType" value="sHis">
+      <button class="btn btn-primary" type="submit" name="download_btn" value="Download PDF" style="float: right;margin-right:20">Download PDF</button>
+    </form>
+    <table class="table">
+      <thead style="text-align:center;">
+        <tr>
+          <th scope="col">Order ID</th> 
+          <th scope="col">Customer ID</th>  
+          <th scope="col">Quantity</th>
+          <th scope="col">Total</th>
+          <th scope="col">Date</th>
+        </tr>
+      </thead>
+      <tbody style="text-align:center;">
+          {% for row in shis %}
+          <tr>
+              <td>{{ row.ORDER_ID }}</td>
+              <td>{{ row.CUSTOMERID }}</td>
+              <td>{{ row.TQTY }}</td>
+              <td>{{ row.TOTALBILL }}</td>
+              <td>{{ row.SALEDATE }}</td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+  </div>
+</div>
+
+{% endblock %}
