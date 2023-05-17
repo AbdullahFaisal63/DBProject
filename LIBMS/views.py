@@ -656,11 +656,14 @@ def venHome(request):
     cursor=connection.cursor()
     cursor.execute(f"SELECT p.*, v.quantity FROM products p, vendor_products v WHERE v.pid=p.id AND v.vid={request.session.get('user_id')}")
   rows=cursor.fetchall()
+  #print(cursor.description)
   columns=[]
   for col in cursor.description:
+    #print(col)
     columns.append(col[0])
   data=[]
   for row in rows:
+    print(row)
     row_dict = {}
     for i in range(len(columns)):
       row_dict[columns[i]] = row[i]
@@ -676,7 +679,7 @@ def addItems(request):
     cursor.execute(f"SELECT * FROM products WHERE name LIKE '%{request.GET.get('search')}%' AND category='{request.GET.get('category')}'")
   elif request.GET.get('search'):
     #search on name in products table
-    print(f"SELECT * FROM products WHERE name LIKE '%{request.GET.get('search')}%'")
+    # print(f"SELECT * FROM products WHERE name LIKE '%{request.GET.get('search')}%'")
     cursor.execute(f"SELECT * FROM products WHERE name LIKE '%{request.GET.get('search')}%'")
   elif request.GET.get('category'):
     #search on name and category on products table
@@ -687,7 +690,7 @@ def addItems(request):
     cursor.execute("SELECT * FROM products")
 
   rows = cursor.fetchall()
-  print(rows)
+  # print(rows)
   columns=[]
   for col in cursor.description:
     columns.append(col[0])
@@ -876,7 +879,9 @@ def sendNotifications(request):
     cursor=connection.cursor()
     print(f"insert into notifications values(\'{request.POST.get('notification')}\',{request.POST.get('email')},{int(request.session.get('user_id'))};")
 
-    cursor.execute(f"insert into notifications(message,cemail,aid) values(\'{request.POST.get('notification')}\',\'{request.POST.get('email')}\',{int(request.session.get('user_id'))});")
+    cursor.execute(f"SELECT email FROM admin WHERE id={request.session.get('user_id')}")
+    aemail=cursor.fetchone()[0]
+    cursor.execute(f"insert into notifications(message,cusid,aid) values(\'{request.POST.get('notification')}\',\'{request.POST.get('email')}\',\'{aemail}\');")
     cursor.close()
   return render(request,'sendNotifications.html')
 
@@ -887,9 +892,11 @@ def notifications(request):
     cursor.execute(f"DELETE FROM notifications WHERE notno={request.POST.get('notno')}")
     cursor.close()
   cursor=connection.cursor()
+  
   cursor.execute(f"SELECT email from customer WHERE id={request.session.get('user_id')}")
   aemail=cursor.fetchone()[0]
-  cursor.execute(f"SELECT n.notno, n.message, a.email, a.fname FROM notifications n, admin a WHERE n.cemail=\'{aemail}\' AND n.aid=a.id")
+  cursor.execute(f"SELECT n.notno, n.message, n.aid, a.fname FROM notifications n, admin a WHERE n.cusid=\'{aemail}\' AND n.aid=a.email")
+  
   rows=cursor.fetchall()
   columns=[]
   for col in cursor.description:
